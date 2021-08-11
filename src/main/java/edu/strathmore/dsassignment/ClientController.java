@@ -3,12 +3,12 @@ package edu.strathmore.dsassignment;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class MainController {
+public class ClientController {
     @FXML
     private Label welcomeText;
 
     @FXML
     protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to DS - Assignment Application!");
+        welcomeText.setText("Welcome to DS - Client Application!");
     }
 }
