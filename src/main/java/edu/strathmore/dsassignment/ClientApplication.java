@@ -1,5 +1,5 @@
 package edu.strathmore.dsassignment;
-
+import edu.strathmore.dsassignment.ClientController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,11 +11,13 @@ public class ClientApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(ClientApplication.class.getResource("client-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 520, 540);
+        Scene scene = new Scene(fxmlLoader.load(), 420, 540);
         stage.setTitle("DS - Client");
         stage.setScene(scene);
+        //showImage();
         stage.show();
     }
+
 
     public static void main(String[] args) {
         launch();

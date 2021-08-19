@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -13,7 +12,7 @@
     </padding>
    <ImageView fx:id="logoView" fitHeight="113.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
       <image>
-
+         <Image url="@strath_logo.png" />
       </image></ImageView>
    <AnchorPane prefHeight="200.0" prefWidth="250.0">
       <children>
@@ -38,13 +37,10 @@
       </VBox.margin>
    </AnchorPane>
    <Label fx:id="errorText" textAlignment="CENTER" textFill="#f70808" />
-    <Button defaultButton="true" onAction="#onSendButtonClick" style="-fx-background-color: blue; -fx-font-weight: bold;" text="SEND" textFill="WHITE">
+    <Button onAction="#onSendButtonClick" style="-fx-background-color: blue;" text="SEND" textFill="WHITE">
       <font>
          <Font size="14.0" />
-      </font>
-      <cursor>
-         <Cursor fx:constant="HAND" />
-      </cursor></Button>
+      </font></Button>
    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
       <children>
          <ProgressIndicator fx:id="sendingProgress" prefHeight="33.0" prefWidth="27.0" visible="false" />
