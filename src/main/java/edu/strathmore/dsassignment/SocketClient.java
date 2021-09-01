@@ -7,39 +7,53 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.HashMap;
-import java.util.Map;
 
 public class SocketClient {
-    public static void socketClient(HashMap map) throws UnknownHostException, IOException, ClassNotFoundException, InterruptedException{
+    /*
+    * public socketClient(Hashmap) returns String socketServer response
+    * */
+    public static void socketClient(HashMap detailsMap) throws IOException, ClassNotFoundException, InterruptedException{
         //get the localhost IP address, if server is running on some other IP, you need to use that
         InetAddress host = InetAddress.getLocalHost();
         Socket socket = null;
         ObjectOutputStream oos = null;
-        ObjectInputStream ois = null;
 
-        System.out.println("Iterating Hashmap...");
-
-            System.out.println(map);
+        //prints map
+        detailsMap.forEach((k, v) -> System.out.println(k + " : " + v));
 
 
-        /*
-        for(int i=0; i<5;i++){
+
+        for(int i=0; i< detailsMap.size();i++){
             //establish socket connection to server
             socket = new Socket(host.getHostName(), 9876);
             //write to socket using ObjectOutputStream
             oos = new ObjectOutputStream(socket.getOutputStream());
             System.out.println("Sending request to Socket Server");
-            if(i==4)oos.writeObject("exit");
-            else oos.writeObject(""+i);
-            //read the server response message
-            ois = new ObjectInputStream(socket.getInputStream());
-            String message = (String) ois.readObject();
+
+            Object key = detailsMap.keySet().toArray()[i];
+            Object value = detailsMap.get(key);
+
+
+            oos.writeObject(key+":"+value);
+
+        }
+
+        socket = new Socket(host.getHostName(), 9876);
+        //write to socket using ObjectOutputStream
+        oos = new ObjectOutputStream(socket.getOutputStream());
+        oos.writeObject("end");
+
+        //read the server response message
+        try (ObjectInputStream ois = new ObjectInputStream(socket.getInputStream())) {
+            String message;
+            message = (String) ois.readObject();
             System.out.println("Message: " + message);
             //close resources
             ois.close();
-            oos.close();
-            Thread.sleep(100);
-        }*/
+        }
+        oos.close();
+        Thread.sleep(100);
+
     }
 
 }

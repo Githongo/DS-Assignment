@@ -40,6 +40,7 @@ public class ClientController implements Initializable {
             map.put("Faculty", facultyField.getText());
             map.put("Message", messageField.getText());
 
+
             SocketClient.socketClient(map);
         }
     }
