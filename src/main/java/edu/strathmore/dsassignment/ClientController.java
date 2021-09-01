@@ -1,5 +1,7 @@
 package edu.strathmore.dsassignment;
 
+import edu.strathmore.dsassignment.SocketClient;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -9,7 +11,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class ClientController implements Initializable {
@@ -24,11 +28,19 @@ public class ClientController implements Initializable {
 
 
     @FXML
-    protected void onSendButtonClick() {
+    protected void onSendButtonClick() throws IOException, ClassNotFoundException, InterruptedException {
         errorText.setText("");
         if(basicInputValidation()) {
             sendingProgress.setVisible(true);
             successText.setText("Sending...");
+
+            HashMap<String,String> map=new HashMap<String,String>();//Creating HashMap
+            map.put("studentNumber", studentNumberField.getText());  //Put elements in Map
+            map.put("studentName", studentNameField.getText());
+            map.put("Faculty", facultyField.getText());
+            map.put("Message", messageField.getText());
+
+            SocketClient.socketClient(map);
         }
     }
 
@@ -36,7 +48,7 @@ public class ClientController implements Initializable {
     //checks for blank input fields
     private boolean basicInputValidation() {
         String errors = "Error: ";
-        Boolean validation = true;
+        boolean validation = true;
         if(studentNumberField.getText().isBlank()){
             errors = errors + " Student Number";
             validation = false;
@@ -54,8 +66,7 @@ public class ClientController implements Initializable {
             validation = false;
         }
 
-
-        if(validation == false){
+        if(!validation){
             errorText.setText(errors + " cannot be empty!");
         }
 
