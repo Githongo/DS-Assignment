@@ -19,21 +19,16 @@ public class SocketClient {
         Socket socket;
         ObjectOutputStream oos;
 
-        //prints map
-        detailsMap.forEach((k, v) -> System.out.println(k + " : " + v));
-
-
-
         for(int i=0; i< detailsMap.size();i++){
             //establish socket connection to server
             socket = new Socket(host.getHostName(), 9876);
             //write to socket using ObjectOutputStream
             oos = new ObjectOutputStream(socket.getOutputStream());
-            System.out.println("Sending request to Socket Server");
+            System.out.println("Sending request to Socket Server...");
 
+            //Getting Key and Value from LinkedHashMap to send to Server
             Object key = detailsMap.keySet().toArray()[i];
             Object value = detailsMap.get(key);
-
             oos.writeObject(key+":"+value);
 
         }
@@ -49,6 +44,7 @@ public class SocketClient {
             message = (String) ois.readObject();
             System.out.println("Response Message: " + message);
 
+            //Assigning message variable to public static feedback
             feedback = message;
 
         }

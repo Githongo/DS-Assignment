@@ -31,9 +31,10 @@ public class ClientProtocol implements Initializable {
     protected void onSendButtonClick() throws IOException, ClassNotFoundException, InterruptedException {
         errorText.setText("");
         if(basicInputValidation()) {
+            /*Sets the progressBar to visible*/
             sendingProgress.setVisible(true);
-            successText.setText(SocketClient.feedback);
 
+            /*Creating LinkedHashMap to store input*/
             LinkedHashMap<String,String> map= new LinkedHashMap<>();//Creating HashMap
             map.put("studentNumber", studentNumberField.getText());  //Put elements in Map
             map.put("studentName", studentNameField.getText());
@@ -47,8 +48,6 @@ public class ClientProtocol implements Initializable {
             }
         }
     }
-
-
 
     //checks for blank input fields
     private boolean basicInputValidation() {
