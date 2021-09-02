@@ -5,18 +5,19 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class SocketClient {
+
+    public static String feedback = "sending";
     /*
     * public socketClient(Hashmap) returns String socketServer response
     * */
-    public static void socketClient(HashMap detailsMap) throws IOException, ClassNotFoundException, InterruptedException{
+    public boolean socketClient(LinkedHashMap detailsMap) throws IOException, ClassNotFoundException {
         //get the localhost IP address, if server is running on some other IP, you need to use that
         InetAddress host = InetAddress.getLocalHost();
-        Socket socket = null;
-        ObjectOutputStream oos = null;
+        Socket socket;
+        ObjectOutputStream oos;
 
         //prints map
         detailsMap.forEach((k, v) -> System.out.println(k + " : " + v));
@@ -33,7 +34,6 @@ public class SocketClient {
             Object key = detailsMap.keySet().toArray()[i];
             Object value = detailsMap.get(key);
 
-
             oos.writeObject(key+":"+value);
 
         }
@@ -47,12 +47,15 @@ public class SocketClient {
         try (ObjectInputStream ois = new ObjectInputStream(socket.getInputStream())) {
             String message;
             message = (String) ois.readObject();
-            System.out.println("Message: " + message);
-            //close resources
-            ois.close();
+            System.out.println("Response Message: " + message);
+
+            feedback = message;
+
         }
+        //close after use
         oos.close();
-        Thread.sleep(100);
+
+        return true;
 
     }
 

@@ -1,5 +1,4 @@
 package edu.strathmore.dsassignment;
-import edu.strathmore.dsassignment.SocketClient;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,11 +13,10 @@ public class ClientApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 420, 540);
         stage.setTitle("DS - Client");
         stage.setScene(scene);
-
         stage.show();
     }
 
-
+    /*Main method which runs the Client side Application*/
     public static void main(String[] args) {
         launch();
     }

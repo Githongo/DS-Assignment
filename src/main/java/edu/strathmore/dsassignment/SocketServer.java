@@ -9,16 +9,15 @@ import java.net.Socket;
 
 
 public class SocketServer {
-    //static ServerSocket variable
-    private static ServerSocket server;
     //socket server port on which it will listen
-    private static int port = 9876;
+    private static final int port = 9876;
     public static String messageInput = null;
 
 
-    public static void main(String args[]) throws IOException, ClassNotFoundException{
+    public static void main(String[] args) throws IOException, ClassNotFoundException{
         //create the socket server object
-        server = new ServerSocket(port);
+        //static ServerSocket variable
+        ServerSocket server = new ServerSocket(port);
 
         //keep listens indefinitely until receives 'exit' call or program terminates
         while(true){
@@ -35,27 +34,33 @@ public class SocketServer {
                 //create ObjectOutputStream object
                 ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
                 //write object to Socket if the end of input messages is reached
-                oos.writeObject("Well recieved!");
+                oos.writeObject(ServerProtocol.processInput());
                 oos.close();
+                //System.out.println(ServerProtocol.processInput());
+
+
             }
             else{
-                String splitted[] =message.split(":"); // split incoming streams into key value pairs
+                String[] splitted =message.split(":"); // split incoming streams into key value pairs
 
                 /*
                 * Display out sent data: continue from here */
 
                 System.out.println("Key: "+splitted[0]+", Value: "+splitted[1]);
+
                 messageInput = splitted[1];
                 //printing whether the user has guessed the right message answer or giving hints to retry
-                System.out.println(ServerProtocol.theOutput);
 
             }
             //close resources
             ois.close();
             socket.close();
+
             //terminate the server if client sends exit request
             if(message.equalsIgnoreCase("exit")) break;
         }
+
+
         System.out.println("Shutting down Socket server!!");
         //close the ServerSocket object
         server.close();
