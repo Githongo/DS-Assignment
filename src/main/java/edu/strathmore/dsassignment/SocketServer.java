@@ -13,6 +13,7 @@ public class SocketServer {
     private static ServerSocket server;
     //socket server port on which it will listen
     private static int port = 9876;
+    public static String messageInput = null;
 
 
     public static void main(String args[]) throws IOException, ClassNotFoundException{
@@ -44,6 +45,9 @@ public class SocketServer {
                 * Display out sent data: continue from here */
 
                 System.out.println("Key: "+splitted[0]+", Value: "+splitted[1]);
+                messageInput = splitted[1];
+                //printing whether the user has guessed the right message answer or giving hints to retry
+                System.out.println(ServerProtocol.theOutput);
 
             }
             //close resources
